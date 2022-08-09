@@ -1,0 +1,26 @@
+{
+  "name": "finalproyect",
+  "version": "1.0.0",
+  "description": "Final Project",
+  "main": "main.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "mocha",
+    "chai",
+    "javascript"
+  ],
+  "author": "Alberto",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "mocha": "^10.0.0"
+  },
+  "dependencies": {
+    "mysql": "^2.18.1"
+  },
+  "directories": {
+    "test": "test"
+  }
+}
