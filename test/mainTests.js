@@ -4,11 +4,11 @@ const { arrayOfNumbers, Show } = require('../main');
 const main = require('../main');
 
 const DB = main.DBConnection();
-const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
-const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
+//const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
+//const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
 const Update = main.UpdateBook('It','It','Novela','Terror','Tijuana','Monterrey',2);
 const Buy = main.BuyBook('Alejandro','It','Tijuana');
-const Register = main.Register('German','German123');
+const Register = main.Register('German','German123.');
 const ConSales = main.Inspect(3,'Tijuana');
 const UpdaUser = main.UsersUp(2,4);
 const Search = main.Consult('el alquimista');
@@ -77,16 +77,17 @@ describe('Main Suite',function(){
             });
         });
     });
-
+*/
     describe('Tipos de Usuarios', function(){
 
         it('Insert New User', function(){
-            DB.query(Register,(err)=>{
-                if(err) throw err
-            });
+            let valores = Object.values(Register);
+            assert.match(Register,/([A-z])+[\.\*\\]+([0-9])/,'Cuenta con un caracter Especial y un numero');
+           // assert.match(Register[1]) 
+             
         });
-
-
+    });
+/*
         it('Admin Update', function(){
             DB.query(UpdaUser,(err)=>{
                 if(err) throw err

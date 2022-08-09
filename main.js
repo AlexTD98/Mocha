@@ -69,7 +69,8 @@ module.exports = {
 
 
     Register : function(Name, password){
-        return ("INSERT INTO `bibliotecas`.`users` (`Name`, `password`) VALUES ('"+Name+"', '"+password+"');");
+        array = [{Name : Name},{password : password}]
+        return (array[1]);
     },
 
     Inspect : function(idUSTyp,sucursal){
