@@ -4,20 +4,16 @@ const { arrayOfNumbers, Show, DeleSucur } = require('../main');
 const main = require('../main');
 
 const DB = main.DBConnection();
-//const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
-//const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
+const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
+const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
 const Update = main.UpdateBook('It','It','Novela','Terror','Tijuana','Monterrey',2);
 const Buy = main.BuyBook('It','Tijuana');
 const Register = main.Register('German','German*1');
-const ConSales = main.Inspect(3,'Tijuana');
+const ConSales = main.Inspect();
 const UpdaUser = main.UsersUp();
 const Search = main.Consult();
-const showall = main.Show(2);
 const sucursal = main.Sucursales('Tijuana');
 const consults = main.ConsultS();
-const updatesell = main.UpdateS(2,1,3,1,4);
-/*const subtractionResult = main.subtraction(4,2);
-const arrayExample = main.arrayOfNumbers();*/
 
 describe('Main Suite',function(){
 
@@ -40,7 +36,7 @@ describe('Main Suite',function(){
         it('Add Books', function(){
             mongoose.connect(DB,(err)=>{
                 Add.save((err)=>{
-                    console.log(err);
+                    assert.ifError(err);
                 });
             });
         });
@@ -50,7 +46,7 @@ describe('Main Suite',function(){
         it('Delete Books', function(){
             mongoose.connect(DB,(err)=>{
                 Delete.deleteOne((err)=>{
-                    console.log(err);
+                    assert.ifError(err);
                 });
             });
         });
@@ -65,18 +61,7 @@ describe('Main Suite',function(){
         });
 
     });
-/*
 
-    describe('Show all Books', function(){
-
-        it('DB Consult',function(){
-            DB.query(showall, (err, rows) =>{
-                if(err) throw err
-                console.log(rows)
-            });
-        });
-    });
-*/
     describe('Tipos de Usuarios', function(){
 
         it('Insert New User', function(){
@@ -116,21 +101,20 @@ describe('Main Suite',function(){
             assert.isNotArray(consults,"Sucursales");
         });
     });
-/*
+
 
     describe('Reportes de Venta', function(){
+        
         it('Consult Sales', function(){
-            DB.query(ConSales,(err,rows)=>{
-                if(err) throw err
-                console.log(rows)
-            });
+            assert.isExtensible(ConSales);
+            console.log(ConSales);
         });
 
         it('Update Sale', function(){
-            DB.query(updatesell,(err)=>{
-                if(err) throw err
-            });
+            var sale = {titulo:'El alquimista', sucursal:'Monterrey'};
+            var fn = function(){sale.titulo = 'IT',sale.sucursal = "Tijuana"};
+            assert.changes(fn,sale,'titulo');
         });
     });
-    */
+    
 });

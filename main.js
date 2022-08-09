@@ -72,13 +72,11 @@ module.exports = {
         return (array[1]);
     },
 
-    Inspect : function(idUSTyp,sucursal){
-        if(idUSTyp >= 3){
-            return ("SELECT Title, Author, Name,sucursal FROM bibliotecas.sales LEFT JOIN books ON books.id = sales.IdBook LEFT JOIN users ON users.id = sales.IdBook LEFT JOIN sucursal ON sucursal.id = sales.IdSucursal where sucursal like '"+sucursal+"%';");
-        }
-        else{
-            return "Fail";
-        }
+    Inspect : function(){
+        sales = [{titulo :'El alquimista', sucursal : 'Tijuana', comprador : 'Alejandro'},
+        {titulo :'IT', sucursal : 'Monterrey', comprador : 'Karen'},
+        {titulo :'La teoria del todo', sucursal : 'Colima', comprador : 'Carlos'}];
+        return(sales);
     },
 
     UsersUp : function(){
@@ -107,19 +105,7 @@ module.exports = {
     ConsultS : function(){
         var sucursales = 'Tijuana|Monterrey|Colima|Ensenada'
         return (sucursales);
-    },
-
-    UpdateS : function(IdUser,IdBook,Idsucursal,IdSell,idUSTyp){
-        if(idUSTyp >= 4){
-        return ("UPDATE `bibliotecas`.`sales` SET `IdUser` = '"+IdUser+"', `IdBook` = '"+IdBook+"', `IdSucursal` = '"+Idsucursal+"' WHERE (`id` = '"+IdSell+"');");
-        }
     }
-/*
-    subtraction: function(number1, number2){
-        return number1 - number2;
-    },
 
-    arrayOfNumbers : function(){
-        return [0,1,2,3,4,5];
-    }*/
+   
 };
