@@ -7,11 +7,11 @@ const DB = main.DBConnection();
 //const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
 //const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
 const Update = main.UpdateBook('It','It','Novela','Terror','Tijuana','Monterrey',2);
-const Buy = main.BuyBook('Alejandro','It','Tijuana');
-const Register = main.Register('German','German123.');
+const Buy = main.BuyBook('It','Tijuana');
+const Register = main.Register('German','German*1');
 const ConSales = main.Inspect(3,'Tijuana');
-const UpdaUser = main.UsersUp(2,4);
-const Search = main.Consult('el alquimista');
+const UpdaUser = main.UsersUp();
+const Search = main.Consult();
 const showall = main.Show(2);
 const sucursal = main.Sucursales('Guanajuato',4);
 const deleteS = main.DeleSucur('Queretaro',4);
@@ -62,7 +62,7 @@ describe('Main Suite',function(){
         });
 
         it('Buy Books', function(){
-            assert.isArray(Buy, "Datos De libro a comprar correctos");
+            assert.isSealed(Buy);
         });
 
     });
@@ -82,29 +82,24 @@ describe('Main Suite',function(){
 
         it('Insert New User', function(){
             let valores = Object.values(Register);
-            assert.match(Register,/([A-z])+[\.\*\\]+([0-9])/,'Cuenta con un caracter Especial y un numero');
-           // assert.match(Register[1]) 
+           assert.match(valores[0],/([A-z])|[\.\*\\]|([0-9])/,'Cuenta con un caracter Especial y un numero');
+           
              
         });
-    });
-/*
+    
+
         it('Admin Update', function(){
-            DB.query(UpdaUser,(err)=>{
-                if(err) throw err
-            });
+            assert.includeDeepMembers(UpdaUser,[{User:"Alejandro"}], "Si se encuentra");
         });
     });
 
     describe('Busqueda de Libros', function(){
 
         it('Search Books', function(){
-            DB.query(Search,(err,rows)=>{
-                if(err) throw err
-                console.log(rows);
-            });
+           assert.includeDeepMembers(Search,[{titulo : 'El alquimista'}]);
         });
     });
-        
+        /*
     describe('Punto de venta', function(){
         it('Add Branch Office', function(){
             DB.query(sucursal, (err)=>{

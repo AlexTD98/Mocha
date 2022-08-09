@@ -61,15 +61,15 @@ module.exports = {
         
     },
 
-    BuyBook : function(user,book,sucursal){
-        array = [{user,book,sucursal}];
-        return (array);          
+    BuyBook : function(book,sucursal){
+        sealedObject = Object.seal({titulo : book},{sucursal : sucursal});
+        return (sealedObject);          
     },
 
 
 
     Register : function(Name, password){
-        array = [{Name : Name},{password : password}]
+        array = [{Name},{password}];
         return (array[1]);
     },
 
@@ -82,14 +82,15 @@ module.exports = {
         }
     },
 
-    UsersUp : function(iduser,idUSTyp){
-        if(idUSTyp >= 4){
-            return ("UPDATE `bibliotecas`.`users` SET `⁯idusertype` = '2' WHERE (`id` = '"+iduser+"');");
-        }
+    UsersUp : function(){
+        Consult = [{User : 'Alejandro'},{User: 'Carlos'}, {User:'Karen'}];
+        return(Consult);
     },
 
-    Consult : function(Search){
-        return ("SELECT * FROM bibliotecas.books where Title like '"+Search+"%' or Author like '"+Search+"%' or Gender like '"+Search+"%';");
+    Consult : function(){
+        Consult = [{titulo : 'El alquimista'},{autor : 'Paulo Coelho'},{genero : 'Novela'},
+                    {titulo : 'La teoria del todo'}, {autor : 'Stephen Hawking '}, {genero : 'Ciencia'}];
+        return (Consult);
     },
 
     Show : function(idUSTyp){
