@@ -1,6 +1,6 @@
 const assert = require('chai').assert;
 const { default: mongoose } = require('mongoose');
-const { arrayOfNumbers, Show } = require('../main');
+const { arrayOfNumbers, Show, DeleSucur } = require('../main');
 const main = require('../main');
 
 const DB = main.DBConnection();
@@ -13,8 +13,7 @@ const ConSales = main.Inspect(3,'Tijuana');
 const UpdaUser = main.UsersUp();
 const Search = main.Consult();
 const showall = main.Show(2);
-const sucursal = main.Sucursales('Guanajuato',4);
-const deleteS = main.DeleSucur('Queretaro',4);
+const sucursal = main.Sucursales('Tijuana');
 const consults = main.ConsultS();
 const updatesell = main.UpdateS(2,1,3,1,4);
 /*const subtractionResult = main.subtraction(4,2);
@@ -99,28 +98,25 @@ describe('Main Suite',function(){
            assert.includeDeepMembers(Search,[{titulo : 'El alquimista'}]);
         });
     });
-        /*
+        
     describe('Punto de venta', function(){
         it('Add Branch Office', function(){
-            DB.query(sucursal, (err)=>{
-                if(err) throw err
-            });
+            assert.typeOf(sucursal,'string','Es un string');
         });
+    
 
         it('Delete Branch Office', function(){
-            DB.query(deleteS, (err)=>{
-                if(err) throw err
-            });
+            var obj = { activo: 1 };
+            var fn = function() { obj.activo = 0 };
+            assert.changes(fn, obj, 'activo');
         });
+
 
         it('Consult Branch Office', function(){
-            DB.query(consults, (err,rows)=>{
-                if(err) throw err
-                console.log(rows);
-            });
+            assert.isNotArray(consults,"Sucursales");
         });
     });
-
+/*
 
     describe('Reportes de Venta', function(){
         it('Consult Sales', function(){

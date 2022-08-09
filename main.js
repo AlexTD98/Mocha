@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const parseId = (id) =>{
     return mongoose.Types.ObjectId(id)
 }
@@ -100,20 +99,14 @@ module.exports = {
     },
 
 
-    Sucursales : function(city,idUSTyp){
-        if(idUSTyp >= 4){
-            return ("INSERT INTO `bibliotecas`.`sucursal` (`sucursal`) VALUES ('"+city+"');");
-        }
+    Sucursales : function(city){
+        return(city);
     },
 
-    DeleSucur : function(city,idUSTyp){
-        if(idUSTyp >=4){
-            return ("DELETE FROM `bibliotecas`.`sucursal` WHERE (`sucursal` = '"+city+"');");
-        }
-    },
 
     ConsultS : function(){
-        return ("SELECT * FROM bibliotecas.sucursal;");
+        var sucursales = 'Tijuana|Monterrey|Colima|Ensenada'
+        return (sucursales);
     },
 
     UpdateS : function(IdUser,IdBook,Idsucursal,IdSell,idUSTyp){
