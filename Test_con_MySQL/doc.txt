@@ -1,0 +1,1 @@
+Decidimos dejar la prueba con que se realizo con MySQL en el repositorio
