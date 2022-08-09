@@ -1,12 +1,13 @@
 const assert = require('chai').assert;
+const { default: mongoose } = require('mongoose');
 const { arrayOfNumbers, Show } = require('../main');
 const main = require('../main');
 
 const DB = main.DBConnection();
-const Add = main.AddBook('It','Stephen King','Novela',2,2);
-const Delete = main.DeleteBook('Crepúsculo',2);
-const Update = main.UpdateBook('El Alquimista','Poulo Coelho','Fantacia','1',2);
-const Buy = main.BuyBook(1,1,1);
+const Add = main.AddBook('It','Stephen King','Novela','Tijuana',2);
+const Delete = main.DeleteBook('62f1b3d5e6ea98e63d29bf27',2);
+const Update = main.UpdateBook('It','It','Novela','Terror','Tijuana','Monterrey',2);
+const Buy = main.BuyBook('Alejandro','It','Tijuana');
 const Register = main.Register('German','German123');
 const ConSales = main.Inspect(3,'Tijuana');
 const UpdaUser = main.UsersUp(2,4);
@@ -24,40 +25,48 @@ describe('Main Suite',function(){
     describe('Data Base Test',function(){
 
         it('DB Connection',function(){
-            DB.connect( (err) =>{
-                if(err) throw err
-            });
+            mongoose.connect(
+                DB,
+                {
+                    keepAlive: true,
+                    useNewUrlParser: true,
+                    useUnifieldTopology: true
+                }
+            )
         });
     });
 
     describe('Contro de Libros' , function(){
 
         it('Add Books', function(){
-            DB.query(Add,(err)=>{
-                if(err) throw err
+            mongoose.connect(DB,(err)=>{
+                Add.save((err)=>{
+                    console.log(err);
+                });
             });
         });
+    
+       
 
         it('Delete Books', function(){
-            DB.query(Delete,(err)=>{
-                if(err) throw err
+            mongoose.connect(DB,(err)=>{
+                Delete.deleteOne((err)=>{
+                    console.log(err);
+                });
             });
         });
-
+    
+ 
         it('Update Books', function(){
-            DB.query(Update,(err)=>{
-                if(err) throw err
-            });
+            assert.notDeepEqual(Update[0],Update[1], "Valores Distintos");
         });
 
         it('Buy Books', function(){
-            DB.query(Buy,(err)=>{
-                if(err) throw err
-            });
+            assert.isArray(Buy, "Datos De libro a comprar correctos");
         });
 
     });
-
+/*
 
     describe('Show all Books', function(){
 
@@ -131,5 +140,5 @@ describe('Main Suite',function(){
             });
         });
     });
-    
+    */
 });

@@ -1,46 +1,69 @@
-const mysql = require('mysql')
+const mongoose = require('mongoose');
+
+const parseId = (id) =>{
+    return mongoose.Types.ObjectId(id)
+}
+const parseIdUp = (id) =>{
+    return mongoose.Types.ObjectId(id)
+}
+let schema = mongoose.Schema({
+    Titulo:{type: String},
+    Autor:{type: String},
+    Genero:{type: String},
+    Sucursal:{type: String}
+}); 
+let Book = mongoose.model('Libros',schema);
 module.exports = {
 
     DBConnection : function(){
-        const conection = mysql.createConnection({
-            host : 'localhost',
-            port : '3306',
-            user : 'root',
-            password : 'alejandro',
-            database : 'bibliotecas'
-        });
-        return conection;
+        return 'mongodb://localhost/Biblioteca';
     }, 
-
-    AddBook : function(title, author,gender,idsucursal,idUSTyp){
+    AddBook : function(title, author,gender,sucursal,idUSTyp){
         if (idUSTyp >= 2){
-        return ("INSERT INTO `bibliotecas`.`books` (`Title`, `Author`,`Gender`, `Idsucursal` ) VALUES ('"+title+"', '"+author+"','"+gender+"', '"+idsucursal+"');");
+            let newBook = new Book({
+                "Titulo": title,
+                "Autor": author,
+                "Genero": gender,
+                "Sucursal":sucursal
+            });
+        return (newBook);
         }
         else{
             return "Fail";
         }
     },
 
-    DeleteBook : function(title,idUSTyp){
+    DeleteBook : function(id,idUSTyp){
         if(idUSTyp >= 2){
-        return ("DELETE FROM `bibliotecas`.`books` WHERE (`Title` = '"+title+"');");
+            let delBook = new Book({
+                _id:parseId(id)
+            });
+        return (delBook);
         }
         else{
             return "Fail";
         }
     },
 
-    UpdateBook : function(title,author,gender,id,idUSTyp){
-        if(idUSTyp >= 2){
-        return ("UPDATE `bibliotecas`.`books` SET `Title` = '"+title+"', `Author` = '"+author+"', `Gender` = '"+gender+"' WHERE (`id` = '"+id+"');");
-        }
-        else {
-            return "Fail";
-        }
+    UpdateBook : function(title_old,title_new,gender_old,gender_new,branchoffice_old,branchoffice_new, idUSTyp){
+        OldBook = [{
+            Titulo: title_old,
+            Genero: gender_old,
+            Sucursal: branchoffice_old
+        }];
+        NewBook = [{
+            Titulo: title_new,
+            Genero: gender_new,
+            Sucursal: branchoffice_new
+        }];
+        Union = OldBook.concat(NewBook);
+        return (Union);
+        
     },
 
-    BuyBook : function(iduser,idbook,idsucursal){
-        return ("INSERT INTO `bibliotecas`.`sales` (`IdUser`,`IdBook`,`IdSucursal`) VALUES ('"+iduser+"','"+idbook+"','"+idsucursal+"');");
+    BuyBook : function(user,book,sucursal){
+        array = [{user,book,sucursal}];
+        return (array);          
     },
 
 
